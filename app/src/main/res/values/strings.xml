@@ -3,4 +3,5 @@
     <string name="bem_vindo_ao_downloader">Bem-vindo ao Downloader!</string>
     <string name="cole_o_link_para_baixar">Cole o link para baixar</string>
     <string name="baixar">Baixar</string>
+    <string name="permissao_negada">Permissão negada.</string>
 </resources>

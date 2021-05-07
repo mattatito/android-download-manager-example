@@ -17,17 +17,14 @@ import com.google.android.material.textfield.TextInputEditText
 
 class DownloadActivity : AppCompatActivity() {
 
-
-    private val STORAGE_PERMISSION_CODE: Int = 10000
+    private val storagePermissionCode = 10000
     private lateinit var downloadButton: Button
     private lateinit var linkEditText: TextInputEditText
     private lateinit var recyclerView: RecyclerView
-    private var myDonwloadId: Long = 0
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
-
         initLayoutWidgets()
     }
 
@@ -45,7 +42,7 @@ class DownloadActivity : AppCompatActivity() {
             if (checkSelfPermission(Manifest.permission.WRITE_EXTERNAL_STORAGE) == PackageManager.PERMISSION_DENIED) {
                 requestPermissions(
                     arrayOf(Manifest.permission.WRITE_EXTERNAL_STORAGE),
-                    STORAGE_PERMISSION_CODE
+                    storagePermissionCode
                 )
             } else {
                 verifyLink()
@@ -62,11 +59,11 @@ class DownloadActivity : AppCompatActivity() {
         grantResults: IntArray
     ) {
         when (requestCode) {
-            STORAGE_PERMISSION_CODE -> {
+            storagePermissionCode -> {
                 if (grantResults.isNotEmpty() && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
                     verifyLink()
                 } else {
-                    Toast.makeText(applicationContext, "Permissão negada.", Toast.LENGTH_LONG)
+                    Toast.makeText(applicationContext, getString(R.string.permissao_negada), Toast.LENGTH_LONG)
                         .show()
                 }
             }
@@ -75,15 +72,15 @@ class DownloadActivity : AppCompatActivity() {
 
     private fun verifyLink() {
         val inputValue = linkEditText.text.toString()
-        if (!inputValue.isEmpty()) {
+        if (inputValue.isNotEmpty()) {
             downloadRequest(inputValue)
         }
     }
 
     private fun downloadRequest(url: String) {
         val request = DownloadManager.Request(Uri.parse(url))
-            .setTitle("Titulo")
-            .setDescription("Download aleatório")
+            .setTitle("Título da Notificação")
+            .setDescription("Descrição do download")
             .setNotificationVisibility(DownloadManager.Request.VISIBILITY_VISIBLE_NOTIFY_COMPLETED)
             .setAllowedOverMetered(true)
             .setAllowedNetworkTypes(DownloadManager.Request.NETWORK_MOBILE or DownloadManager.Request.NETWORK_WIFI)
@@ -93,7 +90,7 @@ class DownloadActivity : AppCompatActivity() {
             )
 
         val downloadManager = getSystemService(Context.DOWNLOAD_SERVICE) as DownloadManager
-        myDonwloadId = downloadManager.enqueue(request)
+        downloadManager.enqueue(request)
 
     }
 
