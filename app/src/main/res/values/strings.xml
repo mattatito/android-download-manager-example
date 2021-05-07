@@ -1,0 +1,6 @@
+<resources>
+    <string name="app_name">Download Application</string>
+    <string name="bem_vindo_ao_downloader">Bem-vindo ao Downloader!</string>
+    <string name="cole_o_link_para_baixar">Cole o link para baixar</string>
+    <string name="baixar">Baixar</string>
+</resources>
